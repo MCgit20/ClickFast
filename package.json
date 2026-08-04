@@ -1,0 +1,13 @@
+{
+  "name": "clickfast",
+  "version": "1.0.0",
+  "description": "Un petit jeu de clicker avec timer.",
+  "type": "commonjs",
+  "scripts": {
+    "test": "npx jest --env=jsdom"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.0.0"
+  }
+}
