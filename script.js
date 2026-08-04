@@ -28,16 +28,19 @@ function startTimer() {
   timerStarted = true;
 
   timerInterval = setInterval(() => {
+    if (timeLeft <= 0) {
+      stopGame();
+      return;
+    }
     timeLeft -= 1;
     updateTimer();
-
     if (timeLeft <= 0) {
       stopGame();
     }
   }, 1000);
 }
 
-function handleClick() {
+clickButton.addEventListener("click", () => {
   if (timeLeft <= 0) {
     return;
   }
@@ -48,9 +51,9 @@ function handleClick() {
 
   count += 1;
   updateScore();
-}
+});
 
-function resetGame() {
+resetButton.addEventListener("click", () => {
   clearInterval(timerInterval);
   timeLeft = 5;
   count = 0;
@@ -59,35 +62,4 @@ function resetGame() {
   clickButton.textContent = "Click me!";
   updateScore();
   updateTimer();
-}
-
-function initGame() {
-  updateScore();
-  updateTimer();
-
-  if (clickButton) {
-    clickButton.addEventListener("click", handleClick);
-  }
-
-  if (resetButton) {
-    resetButton.addEventListener("click", resetGame);
-  }
-}
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initGame);
-} else {
-  initGame();
-}
-
-module.exports = {
-  handleClick,
-  resetGame,
-  initGame,
-  getCount: () => count,
-  getTimeLeft: () => timeLeft,
-  scoreElement,
-  timerElement,
-  clickButton,
-  resetButton,
-};
+});
