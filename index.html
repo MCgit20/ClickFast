@@ -2,19 +2,41 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <title>ClickFast</title>
   </head>
   <body>
     <div id="main">
-      <div id="container">
-        <h1 class="flex">ClickFast</h1>
-        <p class="catchphrase">Sois le plus rapide des clickers du game ⚡</p>
+      <div id="container" class="flex-center">
+        <div>
+          <h1 class="flex">ClickFast</h1>
+          <p class="catchphrase">Sois le plus rapide des clickers du game ⚡</p>
+          
+          <div style="display: flex; gap: 20px; justify-content: center;">
+            <div>
+              <h3>Score</h3>
+              <div id="score" class="number">0</div>
+            </div>
+            <div>
+              <h3>Temps</h3>
+              <div id="timer" class="number">5</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <button id="button-clicker">Click me!</button>
+            <button id="button-reset" style="padding: 1rem; border-radius: 0.5rem; cursor: pointer;">Reset</button>
+          </div>
+
+          <!-- Section du Scoreboard (pour l'exercice V) -->
+          <div id="scoreboard" style="margin-top: 40px; text-align: left;">
+            <h2>Classement global 🏆</h2>
+            <ul id="score-list" style="list-style: none; padding: 0;"></ul>
+          </div>
+        </div>
       </div>
     </div>
+    <script src="script.js"></script>
   </body>
 </html>

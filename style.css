@@ -20,9 +20,10 @@ h1 {
   font-size: 1.5rem;
   font-weight: bold;
   transition: all 0.3s;
-  &:hover {
-    scale: 1.1;
-  }
+}
+
+#button-clicker:hover {
+  transform: scale(1.1);
 }
 
 .flex-center {
@@ -38,11 +39,11 @@ h1 {
 }
 
 .number {
-  margin: 3rem 0;
+  margin: 1rem auto;
   text-align: center;
   background-color: blanchedalmond;
-  width: 10rem;
-  height: 10rem;
+  width: 8rem;
+  height: 8rem;
   display: flex;
   justify-content: center;
   align-items: center;
