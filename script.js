@@ -1,26 +1,35 @@
-const scoreElement = document.getElementById("score");
-const timerElement = document.getElementById("timer");
-const clickButton = document.getElementById("button-clicker");
-const resetButton = document.getElementById("button-reset");
-
 let count = 0;
 let timeLeft = 5;
 let timerInterval = null;
 let timerStarted = false;
 
+function getElements() {
+  return {
+    scoreElement: document.getElementById("score"),
+    timerElement: document.getElementById("timer"),
+    clickButton: document.getElementById("button-clicker"),
+    resetButton: document.getElementById("button-reset")
+  };
+}
+
 function updateScore() {
-  scoreElement.textContent = count;
+  const { scoreElement } = getElements();
+  if (scoreElement) scoreElement.textContent = count;
 }
 
 function updateTimer() {
-  timerElement.textContent = timeLeft;
+  const { timerElement } = getElements();
+  if (timerElement) timerElement.textContent = timeLeft;
 }
 
 function stopGame() {
   clearInterval(timerInterval);
   timerInterval = null;
-  clickButton.disabled = true;
-  clickButton.textContent = "Temps écoulé";
+  const { clickButton } = getElements();
+  if (clickButton) {
+    clickButton.disabled = true;
+    clickButton.textContent = "Temps écoulé";
+  }
 }
 
 function startTimer() {
@@ -40,26 +49,57 @@ function startTimer() {
   }, 1000);
 }
 
-clickButton.addEventListener("click", () => {
-  if (timeLeft <= 0) {
-    return;
-  }
+function handleGameButton() {
+  const { clickButton } = getElements();
+  if (!clickButton) return;
 
-  if (!timerStarted) {
-    startTimer();
-  }
+  clickButton.addEventListener("click", () => {
+    if (timeLeft <= 0) return;
+    if (!timerStarted) startTimer();
 
-  count += 1;
-  updateScore();
-});
+    count += 1;
+    updateScore();
+  });
+}
 
-resetButton.addEventListener("click", () => {
-  clearInterval(timerInterval);
-  timeLeft = 5;
-  count = 0;
-  timerStarted = false;
-  clickButton.disabled = false;
-  clickButton.textContent = "Click me!";
-  updateScore();
-  updateTimer();
-});
+function handleResetButton() {
+  const { resetButton, clickButton } = getElements();
+  if (!resetButton) return;
+
+  resetButton.addEventListener("click", () => {
+    clearInterval(timerInterval);
+    timeLeft = 5;
+    count = 0;
+    timerStarted = false;
+    if (clickButton) {
+      clickButton.disabled = false;
+      clickButton.textContent = "Click me!";
+    }
+    updateScore();
+    updateTimer();
+  });
+}
+
+// Initialisation au chargement du DOM dans le navigateur
+if (typeof document !== 'undefined') {
+  document.addEventListener("DOMContentLoaded", () => {
+    handleGameButton();
+    handleResetButton();
+  });
+}
+
+// Export pour Jest / Node.js
+if (typeof module !== "undefined") {
+  module.exports = {
+    handleGameButton,
+    handleResetButton,
+    getScore: () => count,
+    getTimeLeft: () => timeLeft,
+    resetGameState: () => {
+      count = 0;
+      timeLeft = 5;
+      timerStarted = false;
+      clearInterval(timerInterval);
+    }
+  };
+}
